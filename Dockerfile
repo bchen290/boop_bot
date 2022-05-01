@@ -22,6 +22,7 @@ RUN cargo build --release
 FROM rust:1.60-slim-buster
 
 # copy the build artifact from the build stage
+COPY ./.env ./.env
 COPY --from=build /boop_bot/target/release/boop_bot .
 
 # set the startup command to run your binary
