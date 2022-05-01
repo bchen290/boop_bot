@@ -49,7 +49,16 @@ async fn main() {
     //
     // In this case, a good default is setting the environment variable
     // `RUST_LOG` to `debug`.
-    tracing_subscriber::fmt::init();
+    let format = tracing_subscriber::fmt::format()
+        .with_level(false) // don't include levels in formatted output
+        .with_target(false) // don't include targets
+        .with_thread_ids(true) // include the thread ID of the current thread
+        .with_thread_names(true) // include the name of the current thread
+        .compact(); // use the `Compact` formatting style.
+
+    tracing_subscriber::fmt()
+        .event_format(format)
+        .init();
 
     let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
 
