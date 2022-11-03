@@ -15,6 +15,7 @@ use serenity::prelude::*;
 use tracing::{error, info};
 
 use crate::commands::meta::*;
+use crate::commands::reddit::*;
 
 pub struct ShardManagerContainer;
 
@@ -38,6 +39,10 @@ impl EventHandler for Handler {
 #[group]
 #[commands(ping)]
 struct General;
+
+#[group]
+#[commands(corgi)]
+struct Reddit;
 
 #[tokio::main]
 async fn main() {
@@ -77,7 +82,7 @@ async fn main() {
 
     // Create the framework
     let framework =
-        StandardFramework::new().configure(|c| c.owners(owners).prefix("~")).group(&GENERAL_GROUP);
+        StandardFramework::new().configure(|c| c.owners(owners).prefix("~")).group(&GENERAL_GROUP).group(&REDDIT_GROUP);
 
     let intents = GatewayIntents::GUILD_MESSAGES
         | GatewayIntents::DIRECT_MESSAGES
